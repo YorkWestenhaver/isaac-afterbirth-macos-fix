@@ -149,21 +149,6 @@ Possibly. Any old Steam-DRM-wrapped **Mac** game that crashes on launch at an ad
 
 ---
 
-## Making the demo GIF (for contributors)
-
-The `docs/demo.gif` at the top is made from a short screen recording:
-
-1. Press **⌘⇧5**, choose **Record Selected Portion**, drag a box over the game window, click **Record**. Play for ~6–10 seconds (menu → start a run → move around), then click the **stop** icon in the menu bar. macOS saves a `.mov` to your Desktop.
-2. Convert it with the included helper (needs `ffmpeg` — `brew install ffmpeg`):
-
-   ```sh
-   ./tools/make-gif.sh ~/Desktop/Screen\ Recording.mov docs/demo.gif
-   ```
-
-   Keep it small (GitHub is happiest under ~5 MB): pass a smaller width/fps or trim the clip, e.g. `./tools/make-gif.sh input.mov docs/demo.gif 480 12 3 8` (480px, 12fps, start at 3s, 8s long).
-
----
-
 ## Credits & license
 
 Diagnosed by reverse-engineering `steamloader.dylib`'s DRM decryption path and live-debugging the crash with `lldb`. Released under the [MIT License](LICENSE). Not affiliated with or endorsed by Valve or Nicalis.

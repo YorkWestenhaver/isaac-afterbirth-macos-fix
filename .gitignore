@@ -9,3 +9,6 @@
 # Build artifacts (the shim is compiled by install.sh into ~/Library, not here)
 *.dylib
 *.o
+
+# Local-only helper (demo GIF tooling), not part of the published fix
+tools/
