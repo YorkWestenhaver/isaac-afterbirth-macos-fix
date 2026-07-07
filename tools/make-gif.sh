@@ -35,7 +35,9 @@ TRIM=()
 FILTER="fps=${FPS},scale=${WIDTH}:-1:flags=lanczos,split[s0][s1];[s0]palettegen=stats_mode=diff[p];[s1][p]paletteuse=dither=bayer:bayer_scale=5"
 
 echo "==> Encoding $OUT (${WIDTH}px, ${FPS}fps)..."
-ffmpeg -y "${TRIM[@]}" -i "$IN" -vf "$FILTER" -loop 0 "$OUT"
+# ${TRIM[@]+"${TRIM[@]}"} safely expands a possibly-empty array under `set -u`
+# (macOS still ships bash 3.2, where a bare "${TRIM[@]}" errors when empty).
+ffmpeg -y ${TRIM[@]+"${TRIM[@]}"} -i "$IN" -vf "$FILTER" -loop 0 "$OUT"
 
 SIZE=$(du -h "$OUT" | cut -f1)
 echo "==> Done: $OUT ($SIZE)"

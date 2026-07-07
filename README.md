@@ -5,7 +5,7 @@
 If the game dies immediately when you press **Play** — no window, straight back to the Steam library, or a segfault crash report — this fixes it. No game files are modified, nothing is cracked, and the fix is a small open-source shim you build yourself.
 
 <p align="center">
-  <img src="docs/demo.gif" alt="The Binding of Isaac launching and running on macOS 15 after applying the fix" width="640">
+  <img src="docs/demo.gif" alt="The Binding of Isaac launching and running on macOS 15 after applying the fix" width="560">
 </p>
 
 ---
