@@ -56,7 +56,7 @@ The fix itself doesn't depend on any specific macOS version: it uses stable POSI
 Requires Apple's Command Line Tools (`xcode-select --install`) so it can compile the shim (~1 second).
 
 ```sh
-git clone https://github.com/YOUR-USERNAME/isaac-afterbirth-macos-fix.git
+git clone https://github.com/YorkWestenhaver/isaac-afterbirth-macos-fix.git
 cd isaac-afterbirth-macos-fix
 ./install.sh
 ```
