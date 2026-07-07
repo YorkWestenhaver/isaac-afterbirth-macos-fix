@@ -59,8 +59,7 @@ You don't need to know anything about coding. The installer detects your Mac, in
 2. Open your **Downloads** folder and double-click the ZIP to unzip it. You'll get a folder named `isaac-afterbirth-macos-fix-main`.
 3. Open that folder and **double-click `install.command`**.
    - **macOS will probably show "Apple could not verify… is free of malware." That's expected — it shows this for _every_ app and script that isn't from the App Store, no matter what it is.** To run it: **right-click** `install.command` → **Open** → **Open**. (Still blocked? Go to  → **System Settings → Privacy & Security**, scroll down, and click **Open Anyway**.) You can read the whole script first if you like — it's plain text.
-   - Rather not deal with that dialog at all? Use the one-line install just below — it skips the warning entirely.
-4. A Terminal window opens and walks you through it in plain language. If it needs Apple's developer tools or Rosetta, it'll offer to install them. When it asks to close and reopen Steam to save the setting, say **yes**.
+4. A Terminal window opens and walks you through it in plain language. If it needs Apple's developer tools or Rosetta, it'll offer to install them. When it asks a question (like closing and reopening Steam to save the setting), just press **Return** to say yes — or type **n** to decline.
 5. When it says **"All done 🎉"**, open Steam and press **Play**.
 
 That's it. To undo everything later, double-click **`uninstall.command`** the same way.
