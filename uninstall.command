@@ -5,7 +5,7 @@
 # Double-click this file. It clears the game's Steam Launch Options and deletes
 # the fix folder. Nothing else on your system is touched.
 
-trap 'echo; read -r -p "Press Return to close this window. "' EXIT
+trap 'echo; read -r -p "Press Return to close this window. " < /dev/tty 2>/dev/null || true' EXIT
 set -uo pipefail
 
 REPO_RAW="https://raw.githubusercontent.com/YorkWestenhaver/isaac-afterbirth-macos-fix/main"
@@ -17,7 +17,7 @@ say()  { printf '\n\033[1m%s\033[0m\n' "$*"; }
 info() { printf '   %s\n' "$*"; }
 ok()   { printf '   \033[32m✓\033[0m %s\n' "$*"; }
 warn() { printf '   \033[33m!\033[0m %s\n' "$*"; }
-ask()  { local a; read -r -p "   $1 [y/N] " a; [[ "$a" =~ ^[Yy]$ ]]; }
+ask()  { local a; read -r -p "   $1 [y/N] " a < /dev/tty 2>/dev/null || a=""; [[ "$a" =~ ^[Yy]$ ]]; }
 steam_running() { pgrep -f "Steam.AppBundle/Steam/Contents/MacOS/steam_osx" >/dev/null 2>&1; }
 
 echo "======================================================================"

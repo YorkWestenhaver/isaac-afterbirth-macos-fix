@@ -58,7 +58,8 @@ You don't need to know anything about coding. The installer detects your Mac, in
 1. At the top of this page, click the green **`< > Code`** button → **Download ZIP**.
 2. Open your **Downloads** folder and double-click the ZIP to unzip it. You'll get a folder named `isaac-afterbirth-macos-fix-main`.
 3. Open that folder and **double-click `install.command`**.
-   - The first time, macOS may say it "can't be opened because it is from an unidentified developer." If so, **right-click** `install.command` → **Open** → **Open**. (This is macOS being cautious about downloaded scripts; you can read exactly what it does — it's plain text.)
+   - **macOS will probably show "Apple could not verify… is free of malware." That's expected — it shows this for _every_ app and script that isn't from the App Store, no matter what it is.** To run it: **right-click** `install.command` → **Open** → **Open**. (Still blocked? Go to  → **System Settings → Privacy & Security**, scroll down, and click **Open Anyway**.) You can read the whole script first if you like — it's plain text.
+   - Rather not deal with that dialog at all? Use the one-line install just below — it skips the warning entirely.
 4. A Terminal window opens and walks you through it in plain language. If it needs Apple's developer tools or Rosetta, it'll offer to install them. When it asks to close and reopen Steam to save the setting, say **yes**.
 5. When it says **"All done 🎉"**, open Steam and press **Play**.
 
@@ -113,14 +114,14 @@ There's a second, macOS-specific wrinkle the wrapper script handles: `/bin/bash`
 
 ---
 
-## Is this safe? Is it legal?
+## What it does to your Mac
 
-Yes to both.
+Nothing invasive — here's the whole footprint:
 
-- **Nothing copyrighted is modified or redistributed.** The fix ships only original code (an MIT-licensed shim, a wrapper script, an installer). It never touches game files or Valve binaries — it only *references* files already on your machine.
-- **It is not a DRM crack — it's the opposite.** It *re-runs Valve's DRM loader in full* and repairs one broken call inside it. It circumvents no copy protection; the DRM executes normally. This keeps it clear of anti-circumvention rules and of Steam/GitHub policies against cracks and piracy.
-- **It's reversible and self-contained.** Everything lives in one folder (`~/Library/Application Support/IsaacDyldShim/`). Double-clicking `uninstall.command` removes it and clears the Launch Options, fully restoring the default behavior.
-- **You compile the shim yourself** from readable source, so you can see exactly what it does.
+- **It doesn't modify the game.** No game files are changed; the fix only *references* files already on your machine.
+- **It all lives in one folder** (`~/Library/Application Support/IsaacDyldShim/`), plus one line added to the game's Steam Launch Options (backed up first).
+- **It's fully reversible.** Double-click `uninstall.command` to remove the folder and clear the Launch Options, restoring the default behavior.
+- **It's open source and you build it yourself**, so you can read exactly what it does before running it.
 
 ---
 
@@ -141,7 +142,8 @@ That's the crash being caught and repaired in real time.
 
 ## Troubleshooting
 
-- **"clang: command not found"** — install Apple's Command Line Tools: `xcode-select --install`, then re-run `./install.sh`.
+- **"Apple could not verify 'install.command' is free of malware"** (or "unidentified developer") — this is normal for any tool that isn't from the App Store; it's not specific to this fix. **Right-click** the file → **Open** → **Open**. If there's no Open button, go to  → **System Settings → Privacy & Security**, scroll down to the message about `install.command`, and click **Open Anyway**. (Or skip it entirely with the one-line terminal install, which macOS doesn't gate.)
+- **"clang: command not found"** — install Apple's Command Line Tools: `xcode-select --install`, then run the installer again.
 - **Game still closes instantly with no crash report** — this usually means `steamloader.dylib` wasn't found. Check that Steam is in the default location (`~/Library/Application Support/Steam`). If it's elsewhere, edit the `STEAMLOADER` path near the top of `isaac_launch_wrapper.sh`.
 - **"Failed to spawn process / OS Error 260" in Steam's logs** — your Launch Options are wrong. They must be the wrapper path in quotes followed by `%command%`. Do **not** use the Linux `DYLD_INSERT_LIBRARIES=... %command%` form; it doesn't work on macOS.
 - **A Steam update replaced `steamloader.dylib`** — no action needed; the wrapper points at it by path, so it keeps working. (If Valve ever *fixes* the underlying bug, the shim simply never fires — it becomes a harmless no-op.)
