@@ -12,7 +12,7 @@
 # config change is backed up first and reversible with uninstall.command.
 
 # Keep the Terminal window open on any exit so the user can read the result.
-trap 'echo; read -r -p "Press Return to close this window. " < /dev/tty 2>/dev/null || true' EXIT
+trap 'echo; printf "Press Return to close this window. "; read -r _ < /dev/tty 2>/dev/null || true' EXIT
 
 set -uo pipefail
 
@@ -28,7 +28,10 @@ info() { printf '   %s\n' "$*"; }
 ok()   { printf '   \033[32m✓\033[0m %s\n' "$*"; }
 warn() { printf '   \033[33m!\033[0m %s\n' "$*"; }
 err()  { printf '   \033[31m✗\033[0m %s\n' "$*"; }
-ask()  { local a; read -r -p "   $1 [y/N] " a < /dev/tty 2>/dev/null || a=""; [[ "$a" =~ ^[Yy]$ ]]; }
+# Prompt visibly (printf goes to the terminal; read -p's prompt would be hidden
+# by the 2>/dev/null we need for the /dev/tty read). Defaults to YES: a bare
+# Return proceeds; only an explicit n/N declines.
+ask()  { local a=""; printf '   %s [Y/n] ' "$1"; read -r a < /dev/tty 2>/dev/null; [[ ! "$a" =~ ^[Nn] ]]; }
 
 echo "======================================================================"
 echo "   The Binding of Isaac — macOS launch fix — installer"
