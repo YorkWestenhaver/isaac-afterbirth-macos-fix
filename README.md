@@ -156,6 +156,12 @@ Double-click **`uninstall.command`** (right-click → Open the first time, same 
 
 ---
 
+## Does it work with mods?
+
+Most likely, yes. The fix only repairs the launch crash — it doesn't change anything else about the game, so Workshop and Lua mods should load exactly as they normally would (the game's Lua scripting runs fine after the fix). This hasn't been extensively tested with a big mod setup, but there's no reason it would interfere. If you hit a mod-related issue, please open an issue.
+
+---
+
 ## Might this help other games?
 
 Possibly. Any old Steam-DRM-wrapped **Mac** game that crashes on launch at an address around `0x7fff5fc0xxxx` is likely hitting the *same* stale-legacy-dyld-stub bug in `steamloader.dylib`. The shim isn't Isaac-specific — only the wrapper's game path and the Launch Options are. If you try it on another title and it works, please open an issue so others can find it.
