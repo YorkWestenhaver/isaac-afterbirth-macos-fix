@@ -23,13 +23,13 @@ If that matches, read on.
 
 ## Requirements & compatibility
 
-**Dependencies (all you need):**
+**The installer checks for these and offers to install anything missing — you don't have to do it yourself.** Listed here for transparency:
 
-- **Apple Command Line Tools** — provides `clang` to compile the shim (takes ~1 second). Install with `xcode-select --install` if you don't have it. That's the *only* build dependency.
-- **Rosetta 2** (Apple Silicon only) — the game is an x86-64 app, so it runs through Rosetta. If the game ever launched on your Mac before, you already have it; if not, install with `softwareupdate --install-rosetta --agree-to-license`.
-- **Steam**, installed in the default location (`~/Library/Application Support/Steam`). If yours is elsewhere, edit one path in `isaac_launch_wrapper.sh` (noted in the file).
+- **Apple Command Line Tools** — provides `clang` to compile the shim (~1 second). The installer runs `xcode-select --install` for you if needed.
+- **Rosetta 2** (Apple Silicon only) — the game is an x86-64 app, so it runs through Rosetta. The installer offers to install it if it's missing.
+- **Steam**, with the game installed, in the default location (`~/Library/Application Support/Steam`).
 
-No other libraries, frameworks, or runtime dependencies — the shim uses only what macOS already ships (`libSystem`: `dlfcn`, `signal`, `ucontext`). `ffmpeg` is optional and only used by the demo-GIF helper, not by the fix.
+No other libraries, frameworks, or runtime dependencies — the shim uses only what macOS already ships (`libSystem`: `dlfcn`, `signal`, `ucontext`).
 
 **Confirmed working on:**
 
@@ -51,29 +51,45 @@ The fix itself doesn't depend on any specific macOS version: it uses stable POSI
 
 ---
 
-## Quick install
+## Install (the easy way)
 
-Requires Apple's Command Line Tools (`xcode-select --install`) so it can compile the shim (~1 second).
+You don't need to know anything about coding. The installer detects your Mac, installs anything it needs, and sets up Steam for you automatically — no paths to type, no Steam settings to edit.
+
+1. At the top of this page, click the green **`< > Code`** button → **Download ZIP**.
+2. Open your **Downloads** folder and double-click the ZIP to unzip it. You'll get a folder named `isaac-afterbirth-macos-fix-main`.
+3. Open that folder and **double-click `install.command`**.
+   - The first time, macOS may say it "can't be opened because it is from an unidentified developer." If so, **right-click** `install.command` → **Open** → **Open**. (This is macOS being cautious about downloaded scripts; you can read exactly what it does — it's plain text.)
+4. A Terminal window opens and walks you through it in plain language. If it needs Apple's developer tools or Rosetta, it'll offer to install them. When it asks to close and reopen Steam to save the setting, say **yes**.
+5. When it says **"All done 🎉"**, open Steam and press **Play**.
+
+That's it. To undo everything later, double-click **`uninstall.command`** the same way.
+
+<details>
+<summary>Prefer the terminal? One-line install</summary>
 
 ```sh
-git clone https://github.com/YorkWestenhaver/isaac-afterbirth-macos-fix.git
-cd isaac-afterbirth-macos-fix
-./install.sh
+curl -fsSL https://raw.githubusercontent.com/YorkWestenhaver/isaac-afterbirth-macos-fix/main/install.command | bash
 ```
 
-The installer prints one **Launch Options** line at the end. Then, in Steam:
+Or clone and run it: `git clone …` then `./install.command`. It's the same script either way — it checks dependencies, builds the shim, and sets your Steam Launch Options automatically.
+</details>
 
-1. Right-click **The Binding of Isaac: Rebirth** → **Properties**
+<details>
+<summary>Setting the Launch Options by hand (if the automatic step didn't run)</summary>
+
+The installer normally does this for you. If it couldn't (e.g. Steam wouldn't close), set it yourself:
+
+1. In Steam, right-click **The Binding of Isaac: Rebirth** → **Properties**
 2. **General** tab → **Launch Options**
-3. Paste the line the installer printed (it looks like the block below, but with *your* home folder):
+3. Paste this line, replacing `YOU` with your macOS username:
 
    ```
    "/Users/YOU/Library/Application Support/IsaacDyldShim/isaac_launch_wrapper.sh" %command%
    ```
 
-4. Close Properties and press **Play**. 🎉
-
-> **Why paste an absolute path?** Steam's Launch Options on macOS don't expand `~` or `$HOME`, so the installer resolves the full path for you.
+   (Steam's Launch Options on macOS don't understand `~`, so it has to be the full path.)
+4. Close Properties and press **Play**.
+</details>
 
 ---
 
@@ -103,7 +119,7 @@ Yes to both.
 
 - **Nothing copyrighted is modified or redistributed.** The fix ships only original code (an MIT-licensed shim, a wrapper script, an installer). It never touches game files or Valve binaries — it only *references* files already on your machine.
 - **It is not a DRM crack — it's the opposite.** It *re-runs Valve's DRM loader in full* and repairs one broken call inside it. It circumvents no copy protection; the DRM executes normally. This keeps it clear of anti-circumvention rules and of Steam/GitHub policies against cracks and piracy.
-- **It's reversible and self-contained.** Everything lives in one folder (`~/Library/Application Support/IsaacDyldShim/`). `./uninstall.sh` removes it; clearing the Launch Options fully restores the default behavior.
+- **It's reversible and self-contained.** Everything lives in one folder (`~/Library/Application Support/IsaacDyldShim/`). Double-clicking `uninstall.command` removes it and clears the Launch Options, fully restoring the default behavior.
 - **You compile the shim yourself** from readable source, so you can see exactly what it does.
 
 ---
@@ -135,11 +151,7 @@ That's the crash being caught and repaired in real time.
 
 ## Uninstall
 
-```sh
-./uninstall.sh
-```
-
-Then clear the game's **Launch Options** in Steam (Properties → General → Launch Options → delete the line).
+Double-click **`uninstall.command`** (right-click → Open the first time, same as install). It clears the game's Steam Launch Options and deletes the fix folder — nothing else is touched.
 
 ---
 
