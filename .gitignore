@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+
+# Screen recordings used to build the demo GIF (keep the final gif, not the source)
+*.mov
+*.mp4
+!docs/demo.gif
+
+# Build artifacts (the shim is compiled by install.sh into ~/Library, not here)
+*.dylib
+*.o
